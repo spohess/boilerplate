@@ -8,8 +8,8 @@ use App\Domains\Order\Repositories\Filters\FilterByCustomerEmail;
 use App\Domains\Order\Repositories\Filters\FilterById;
 use App\Domains\Order\Repositories\Filters\FilterByProduct;
 use App\Domains\Order\Repositories\Filters\FilterByStatus;
+use App\Infrastructure\Repository;
 use App\Models\Order;
-use App\Supports\Abstracts\Repository;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Pipeline;
 

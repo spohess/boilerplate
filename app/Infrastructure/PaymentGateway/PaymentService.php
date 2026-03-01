@@ -2,25 +2,23 @@
 
 declare(strict_types=1);
 
-namespace App\Supports\Services\PaymentGateway;
+namespace App\Infrastructure\PaymentGateway;
 
-use App\Supports\Abstracts\Input;
 use App\Supports\Interfaces\DTOInterface;
 use App\Supports\Interfaces\ServicesInterface;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
-use InvalidArgumentException;
 use RuntimeException;
 
 final class PaymentService implements ServicesInterface
 {
-    public function execute(Input $input): DTOInterface
+    /** @param array<string, mixed> $data */
+    public function execute(array $data): DTOInterface
     {
-        throw_if(!$input instanceof PaymentInput, InvalidArgumentException::class);
-
         $response = Http::post('https://external-service.example.com/pay', [
-            'order_id' => $input->get('order_id'),
-            'customer_email' => $input->get('customer_email'),
-            'product' => $input->get('product'),
+            'order_id' => Arr::get($data, 'order_id'),
+            'customer_email' => Arr::get($data, 'customer_email'),
+            'product' => Arr::get($data, 'product'),
         ]);
 
         if ($response->failed()) {

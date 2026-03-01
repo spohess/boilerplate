@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Supports\Abstracts;
+namespace App\Infrastructure;
 
 use App\Supports\Interfaces\RepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;

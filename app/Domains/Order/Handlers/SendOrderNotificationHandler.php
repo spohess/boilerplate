@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domains\Order\Handlers;
 
+use App\Infrastructure\Notification\NotificationService;
 use App\Supports\Queue\Abstracts\AbstractQueueHandler;
 use App\Supports\Queue\QueueMessage;
-use App\Supports\Services\Notification\NotificationInput;
-use App\Supports\Services\Notification\NotificationService;
 
 final class SendOrderNotificationHandler extends AbstractQueueHandler
 {
@@ -15,10 +14,10 @@ final class SendOrderNotificationHandler extends AbstractQueueHandler
     {
         $data = $message->getData();
 
-        app(NotificationService::class)->execute(NotificationInput::fromArray([
+        app(NotificationService::class)->execute([
             'email' => $data['email'],
             'subject' => $data['subject'],
             'message' => $data['message'],
-        ]));
+        ]);
     }
 }

@@ -2,22 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Supports\Services\PaymentGateway;
+namespace App\Infrastructure\PaymentGateway;
 
-use App\Supports\Abstracts\Input;
 use App\Supports\Interfaces\DTOInterface;
 use App\Supports\Interfaces\ServicesInterface;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
-use InvalidArgumentException;
 
 final class RefundService implements ServicesInterface
 {
-    public function execute(Input $input): DTOInterface
+    /** @param array<string, mixed> $data */
+    public function execute(array $data): DTOInterface
     {
-        throw_if(!$input instanceof RefundInput, InvalidArgumentException::class);
-
         $response = Http::post('https://external-service.example.com/refund', [
-            'amount' => $input->get('amount'),
+            'amount' => Arr::get($data, 'amount'),
         ]);
 
         return new RefundDTO(

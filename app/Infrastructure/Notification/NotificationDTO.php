@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Supports\Services\Notification;
+namespace App\Infrastructure\Notification;
 
 use App\Supports\Interfaces\DTOInterface;
 

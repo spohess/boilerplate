@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Supports\Interfaces;
 
-interface ServicesInterface
+interface ActionInterface
 {
     /** @param array<string, mixed> $data */
-    public function execute(array $data): DTOInterface;
+    public function execute(array $data);
 }

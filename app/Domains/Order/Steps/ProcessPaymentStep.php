@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace App\Domains\Order\Steps;
 
 use App\Domains\Order\Repositories\OrderRepository;
+use App\Infrastructure\PaymentGateway\PaymentDTO;
+use App\Infrastructure\PaymentGateway\PaymentService;
+use App\Infrastructure\PaymentGateway\RefundService;
 use App\Models\Order;
 use App\Supports\Saga\SagaContext;
 use App\Supports\Saga\SagaStepInterface;
-use App\Supports\Services\PaymentGateway\PaymentDTO;
-use App\Supports\Services\PaymentGateway\PaymentInput;
-use App\Supports\Services\PaymentGateway\PaymentService;
-use App\Supports\Services\PaymentGateway\RefundInput;
-use App\Supports\Services\PaymentGateway\RefundService;
 
 final class ProcessPaymentStep implements SagaStepInterface
 {
@@ -28,11 +26,11 @@ final class ProcessPaymentStep implements SagaStepInterface
         $order = $context->get('order');
 
         /** @var PaymentDTO $payment */
-        $payment = $this->paymentService->execute(PaymentInput::fromArray([
+        $payment = $this->paymentService->execute([
             'order_id' => $order->id,
             'customer_email' => $order->customer_email,
             'product' => $order->product,
-        ]));
+        ]);
 
         $this->orderRepository->updateById($order->id, ['amount' => $payment->amount]);
 
@@ -44,9 +42,7 @@ final class ProcessPaymentStep implements SagaStepInterface
         $amount = $context->get('amount');
 
         if ($amount) {
-            $this->refundService->execute(RefundInput::fromArray([
-                'amount' => $amount,
-            ]));
+            $this->refundService->execute(['amount' => $amount]);
         }
     }
 }
