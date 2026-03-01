@@ -14,7 +14,11 @@ interface RepositoryInterface
 
     public function update(array $data, array $filter): bool;
 
+    public function updateById(int $id, array $data): bool;
+
     public function delete(array $filter): bool;
+
+    public function deleteById(int $id): bool;
 
     public function find(array $filter): ?Model;
 
