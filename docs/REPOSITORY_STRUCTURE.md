@@ -34,13 +34,22 @@ step-forward/
 app/
 ├── Console/
 │   └── Commands/
-│       └── QueueReprocessCommand.php       # Reprocessa mensagens da DLQ
+│       └── QueueReprocessCommand.php           # Reprocessa mensagens da DLQ
 │
 ├── Domains/
-│   └── Order/                              # Domínio de pedidos
+│   └── Order/                                  # Domínio de pedidos
+│       ├── Actions/
+│       │   └── PlaceOrderAction.php            # Caso de uso: criação de pedido
 │       ├── Handlers/
 │       │   └── SendOrderNotificationHandler.php  # Handler de fila para notificações
-│       └── Steps/                          # Etapas da saga de pedidos
+│       ├── Repositories/
+│       │   ├── OrderRepository.php             # Acesso a dados do pedido
+│       │   └── Filters/
+│       │       ├── FilterById.php
+│       │       ├── FilterByCustomerEmail.php
+│       │       ├── FilterByProduct.php
+│       │       └── FilterByStatus.php
+│       └── Steps/                              # Etapas da saga de pedidos
 │           ├── CreateOrderStep.php
 │           ├── ProcessPaymentStep.php
 │           └── ConfirmOrderStep.php
@@ -50,77 +59,73 @@ app/
 │
 ├── Http/
 │   ├── Controllers/
-│   │   ├── Controller.php                  # Controller base
-│   │   └── OrderController.php            # Endpoint de criação de pedido
+│   │   ├── Controller.php                      # Controller base
+│   │   └── OrderController.php                # Recebe requisição, delega para Action
 │   └── Requests/
-│       └── StoreOrderRequest.php          # Validação da requisição
+│       └── StoreOrderRequest.php              # Validação da requisição
+│
+├── Infrastructure/                             # Acesso ao mundo externo
+│   ├── Notification/
+│   │   ├── NotificationDTO.php
+│   │   └── NotificationService.php
+│   └── PaymentGateway/
+│       ├── PaymentDTO.php
+│       ├── PaymentService.php
+│       ├── RefundDTO.php
+│       └── RefundService.php
 │
 ├── Listeners/
 │   └── SendOrderConfirmedNotificationListener.php
 │
 ├── Models/
-│   ├── Order.php                          # Modelo Eloquent de pedido
-│   ├── SagaFailureLog.php                 # Registro de falhas da saga
+│   ├── Order.php                              # Modelo Eloquent de pedido
+│   ├── SagaFailureLog.php                     # Registro de falhas da saga
 │   └── User.php
 │
 ├── Providers/
 │   ├── AppServiceProvider.php
-│   └── QueueRouteServiceProvider.php      # Registra rotas de filas
+│   └── QueueRouteServiceProvider.php          # Registra rotas de filas
 │
-└── Supports/                              # Infraestrutura e contratos transversais
+└── Supports/                                  # Padrões e infraestrutura transversal
     ├── Abstracts/
-    │   └── Input.php                      # Classe base para inputs
+    │   └── Repository.php                     # Implementação base de repositório
     ├── Interfaces/
+    │   ├── ActionInterface.php                # Contrato para casos de uso
     │   ├── DTOInterface.php
     │   ├── EntitytInterface.php
-    │   ├── InputInterface.php
+    │   ├── RepositoryInterface.php
     │   ├── ServicesInterface.php
     │   └── ValueObjectInterface.php
-    ├── Queue/                             # Sistema de mensageria
+    ├── Queue/                                 # Sistema de mensageria
     │   ├── Abstracts/
-    │   │   └── AbstractQueueHandler.php   # Handler base com lógica de retry/DLQ
+    │   │   └── AbstractQueueHandler.php       # Handler base com lógica de retry/DLQ
     │   ├── Interfaces/
     │   │   └── QueueMessageInterface.php
-    │   ├── QueueJob.php                   # Job genérico (ShouldQueue)
-    │   ├── QueueMessage.php               # Envelope de mensagem imutável
-    │   ├── QueueProducer.php              # Publicador de mensagens
-    │   └── QueueRouter.php               # Registro de fila → handler
-    ├── Saga/                              # Sistema de orquestração de saga
-    │   ├── SagaContext.php               # Estado compartilhado entre etapas
-    │   ├── SagaOrchestrator.php          # Motor de orquestração
-    │   ├── SagaStepInterface.php         # Contrato de etapa (run + rollback)
-    │   └── StepDispatchesEventInterface.php
-    └── Services/                          # Adaptadores de serviços externos
-        ├── Notification/
-        │   ├── NotificationDTO.php
-        │   ├── NotificationInput.php
-        │   └── NotificationService.php
-        └── PaymentGateway/
-            ├── PaymentDTO.php
-            ├── PaymentInput.php
-            ├── PaymentService.php
-            ├── RefundDTO.php
-            ├── RefundInput.php
-            └── RefundService.php
+    │   ├── QueueJob.php                       # Job genérico (ShouldQueue)
+    │   ├── QueueMessage.php                   # Envelope de mensagem imutável
+    │   ├── QueueProducer.php                  # Publicador de mensagens
+    │   └── QueueRouter.php                    # Registro de fila → handler
+    └── Saga/                                  # Sistema de orquestração de saga
+        ├── SagaContext.php                    # Estado compartilhado entre etapas
+        ├── SagaOrchestrator.php               # Motor de orquestração
+        ├── SagaStepInterface.php              # Contrato de etapa (run + rollback)
+        └── StepDispatchesEventInterface.php
 ```
 
-### Responsabilidades por Diretório
+### Responsabilidades por Camada
 
-| Diretório | Responsabilidade |
-|-----------|-----------------|
-| `Console/Commands/` | Comandos Artisan customizados |
-| `Domains/` | Lógica de negócio organizada por domínio |
+| Camada | Responsabilidade |
+|--------|-----------------|
+| `Domains/` | Lógica de negócio pura — casos de uso, orquestração, acesso a dados |
+| `Domains/*/Actions/` | Casos de uso (implementam `ActionInterface`) — acionáveis por Controller, Job, Command, Listener |
 | `Domains/*/Steps/` | Etapas da saga (implementam `SagaStepInterface`) |
 | `Domains/*/Handlers/` | Handlers de fila (estendem `AbstractQueueHandler`) |
-| `Http/Controllers/` | Recebe requisições HTTP, delega para a saga |
-| `Http/Requests/` | Form Requests com regras de validação |
-| `Models/` | Modelos Eloquent |
-| `Providers/` | Service providers da aplicação |
-| `Supports/Abstracts/` | Classes base reutilizáveis |
+| `Domains/*/Repositories/` | Acesso a dados via Eloquent com filtros por Pipeline |
+| `Infrastructure/` | Integrações com serviços externos (APIs de terceiros) |
+| `Supports/Abstracts/` | Classes base reutilizáveis pelos padrões da aplicação |
 | `Supports/Interfaces/` | Contratos da aplicação |
 | `Supports/Queue/` | Infraestrutura de mensageria (ver `docs/QUEUE_PATTERN.md`) |
 | `Supports/Saga/` | Infraestrutura de orquestração (ver `docs/SAGA.md`) |
-| `Supports/Services/` | Integrações com serviços externos |
 
 ---
 
@@ -225,13 +230,15 @@ No Laravel 12, `bootstrap/app.php` substitui o `Kernel.php`. Middleware, tratame
 POST /api/orders
     └── StoreOrderRequest (validação)
         └── OrderController
-            └── SagaOrchestrator
-                ├── CreateOrderStep     → Order criado no banco
-                ├── ProcessPaymentStep  → Pagamento processado via PaymentService
-                └── ConfirmOrderStep    → Order confirmado + evento disparado
-                                            └── SendOrderConfirmedNotificationListener
-                                                    └── QueueProducer → fila
-                                                            └── SendOrderNotificationHandler
+            └── PlaceOrderAction
+                └── SagaOrchestrator
+                    ├── CreateOrderStep     → OrderRepository::create()
+                    ├── ProcessPaymentStep  → PaymentService (Infrastructure)
+                    └── ConfirmOrderStep    → OrderRepository::updateById() + evento
+                                                └── SendOrderConfirmedNotificationListener
+                                                        └── QueueProducer → fila
+                                                                └── SendOrderNotificationHandler
+                                                                        └── NotificationService (Infrastructure)
 ```
 
 Em caso de falha em qualquer etapa, o `SagaOrchestrator` executa `rollback()` em ordem inversa (LIFO).
