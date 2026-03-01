@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
+use InvalidArgumentException;
+use RuntimeException;
 
 abstract class Repository implements RepositoryInterface
 {
@@ -68,15 +70,30 @@ abstract class Repository implements RepositoryInterface
 
     public function update(array $data, array $filter): bool
     {
-        $query = $this->applyFilter($this->model->query(), $filter);
+        $query = $this->buildSafeQuery($filter);
 
         return (bool) $query->update($data);
     }
 
     public function delete(array $filter): bool
     {
-        $query = $this->applyFilter($this->model->query(), $filter);
+        $query = $this->buildSafeQuery($filter);
 
         return (bool) $query->delete();
+    }
+
+    protected function buildSafeQuery(array $filter): Builder
+    {
+        if (empty($filter)) {
+            throw new InvalidArgumentException('Filtro obrigatório para operações de escrita.');
+        }
+
+        $query = $this->applyFilter($this->model->query(), $filter);
+
+        if ($query->toRawSql() === $this->model->query()->toRawSql()) {
+            throw new RuntimeException('Nenhum filtro foi aplicado à query.');
+        }
+
+        return $query;
     }
 }
