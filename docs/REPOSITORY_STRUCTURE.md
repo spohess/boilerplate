@@ -59,20 +59,21 @@ app/
 │
 ├── Http/
 │   ├── Controllers/
-│   │   ├── Controller.php                      # Controller base
+│   │   ├── Controller.php                     # Controller base
 │   │   └── OrderController.php                # Recebe requisição, delega para Action
 │   └── Requests/
 │       └── StoreOrderRequest.php              # Validação da requisição
 │
-├── Infrastructure/                             # Acesso ao mundo externo
+├── Infrastructure/                            # Acesso ao mundo externo
 │   ├── Notification/
 │   │   ├── NotificationDTO.php
 │   │   └── NotificationService.php
 │   └── PaymentGateway/
-│       ├── PaymentDTO.php
-│       ├── PaymentService.php
-│       ├── RefundDTO.php
-│       └── RefundService.php
+│   │   ├── PaymentDTO.php
+│   │   ├── PaymentService.php
+│   │   ├── RefundDTO.php
+│   │   └── RefundService.php
+│   └── Repository.php                         # Implementação base de repositório
 │
 ├── Listeners/
 │   └── SendOrderConfirmedNotificationListener.php
@@ -87,8 +88,6 @@ app/
 │   └── QueueRouteServiceProvider.php          # Registra rotas de filas
 │
 └── Supports/                                  # Padrões e infraestrutura transversal
-    ├── Abstracts/
-    │   └── Repository.php                     # Implementação base de repositório
     ├── Interfaces/
     │   ├── ActionInterface.php                # Contrato para casos de uso
     │   ├── DTOInterface.php
