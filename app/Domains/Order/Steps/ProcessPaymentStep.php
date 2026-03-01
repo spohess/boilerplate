@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Domains\Order\Steps;
 
 use App\Domains\Order\Repositories\OrderRepository;
+use App\Infrastructure\PaymentGateway\PaymentDTO;
+use App\Infrastructure\PaymentGateway\PaymentService;
+use App\Infrastructure\PaymentGateway\RefundService;
 use App\Models\Order;
 use App\Supports\Saga\SagaContext;
 use App\Supports\Saga\SagaStepInterface;
-use App\Supports\Services\PaymentGateway\PaymentDTO;
-use App\Supports\Services\PaymentGateway\PaymentService;
-use App\Supports\Services\PaymentGateway\RefundService;
 
 final class ProcessPaymentStep implements SagaStepInterface
 {

@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 use App\Domains\Order\Handlers\SendOrderNotificationHandler;
+use App\Infrastructure\Notification\NotificationService;
 use App\Supports\Queue\QueueJob;
 use App\Supports\Queue\QueueMessage;
-use App\Supports\Services\Notification\NotificationService;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Http;
 
