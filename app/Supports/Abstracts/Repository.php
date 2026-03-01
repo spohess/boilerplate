@@ -77,7 +77,10 @@ abstract class Repository implements RepositoryInterface
 
     public function updateById(int $id, array $data): bool
     {
-        return (bool) $this->model->query()->where('id', $id)->update($data);
+        return (bool) $this->model->query()->where(
+            $this->model->getKeyName(),
+            $id,
+        )->update($data);
     }
 
     public function delete(array $filter): bool
@@ -89,7 +92,10 @@ abstract class Repository implements RepositoryInterface
 
     public function deleteById(int $id): bool
     {
-        return (bool) $this->model->query()->where('id', $id)->delete();
+        return (bool) $this->model->query()->where(
+            $this->model->getKeyName(),
+            $id,
+        )->delete();
     }
 
     protected function buildSafeQuery(array $filter): Builder
