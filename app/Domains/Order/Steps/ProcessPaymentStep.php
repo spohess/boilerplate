@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domains\Order\Steps;
 
+use App\Domains\Order\Repositories\OrderRepository;
 use App\Models\Order;
 use App\Supports\Saga\SagaContext;
 use App\Supports\Saga\SagaStepInterface;
@@ -18,6 +19,7 @@ final class ProcessPaymentStep implements SagaStepInterface
     public function __construct(
         private PaymentService $paymentService,
         private RefundService $refundService,
+        private OrderRepository $orderRepository,
     ) {}
 
     public function run(SagaContext $context): void
@@ -32,7 +34,7 @@ final class ProcessPaymentStep implements SagaStepInterface
             'product' => $order->product,
         ]));
 
-        $order->update(['amount' => $payment->amount]);
+        $this->orderRepository->updateById($order->id, ['amount' => $payment->amount]);
 
         $context->set('amount', $payment->amount);
     }

@@ -4,15 +4,18 @@ declare(strict_types=1);
 
 namespace App\Domains\Order\Steps;
 
+use App\Domains\Order\Repositories\OrderRepository;
 use App\Models\Order;
 use App\Supports\Saga\SagaContext;
 use App\Supports\Saga\SagaStepInterface;
 
 final class CreateOrderStep implements SagaStepInterface
 {
+    public function __construct(private OrderRepository $orderRepository) {}
+
     public function run(SagaContext $context): void
     {
-        $order = Order::create([
+        $order = $this->orderRepository->create([
             'customer_name' => $context->get('customer_name'),
             'customer_email' => $context->get('customer_email'),
             'product' => $context->get('product'),
@@ -29,6 +32,8 @@ final class CreateOrderStep implements SagaStepInterface
         /** @var Order|null $order */
         $order = $context->get('order');
 
-        $order?->update(['status' => 'failed']);
+        if ($order) {
+            $this->orderRepository->updateById($order->id, ['status' => 'failed']);
+        }
     }
 }

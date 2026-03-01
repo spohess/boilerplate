@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domains\Order\Steps;
 
+use App\Domains\Order\Repositories\OrderRepository;
 use App\Events\OrderConfirmedEvent;
 use App\Models\Order;
 use App\Supports\Saga\SagaContext;
@@ -12,12 +13,14 @@ use App\Supports\Saga\StepDispatchesEventInterface;
 
 final class ConfirmOrderStep implements SagaStepInterface, StepDispatchesEventInterface
 {
+    public function __construct(private OrderRepository $orderRepository) {}
+
     public function run(SagaContext $context): void
     {
         /** @var Order $order */
         $order = $context->get('order');
 
-        $order->update(['status' => 'confirmed']);
+        $this->orderRepository->updateById($order->id, ['status' => 'confirmed']);
     }
 
     public function rollback(SagaContext $context): void
@@ -25,7 +28,7 @@ final class ConfirmOrderStep implements SagaStepInterface, StepDispatchesEventIn
         /** @var Order $order */
         $order = $context->get('order');
 
-        $order->update(['status' => 'failed']);
+        $this->orderRepository->updateById($order->id, ['status' => 'failed']);
     }
 
     public function event(SagaContext $context): object

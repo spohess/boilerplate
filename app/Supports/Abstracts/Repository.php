@@ -75,11 +75,21 @@ abstract class Repository implements RepositoryInterface
         return (bool) $query->update($data);
     }
 
+    public function updateById(int $id, array $data): bool
+    {
+        return (bool) $this->model->query()->where('id', $id)->update($data);
+    }
+
     public function delete(array $filter): bool
     {
         $query = $this->buildSafeQuery($filter);
 
         return (bool) $query->delete();
+    }
+
+    public function deleteById(int $id): bool
+    {
+        return (bool) $this->model->query()->where('id', $id)->delete();
     }
 
     protected function buildSafeQuery(array $filter): Builder
