@@ -6,6 +6,7 @@ namespace App\Supports\Queue;
 
 use App\Supports\Queue\Interfaces\QueueMessageInterface;
 use Carbon\CarbonImmutable;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 final class QueueMessage implements QueueMessageInterface
@@ -168,15 +169,15 @@ final class QueueMessage implements QueueMessageInterface
     public static function fromArray(array $data): static
     {
         return new static(
-            messageId: $data['message_id'],
-            timestamp: $data['timestamp'],
-            version: $data['version'],
-            source: $data['source'],
-            queue: $data['queue'],
-            data: $data['data'],
-            metadata: $data['metadata'] ?? [],
-            error: $data['error'] ?? null,
-            retryCount: $data['retry_count'] ?? 0,
+            messageId: Arr::get($data, 'message_id'),
+            timestamp: Arr::get($data, 'timestamp'),
+            version: Arr::get($data, 'version'),
+            source: Arr::get($data, 'source'),
+            queue: Arr::get($data, 'queue'),
+            data: Arr::get($data, 'data'),
+            metadata: Arr::get($data, 'metadata', []),
+            error: Arr::get($data, 'error', null),
+            retryCount: Arr::get($data, 'retry_count', 0),
         );
     }
 }
