@@ -25,8 +25,8 @@ final class QueueJob implements ShouldQueue
 
     public function handle(): void
     {
-        $handlerClass = app()->make(QueueRouter::class)->resolve($this->message->getQueue());
-        $handler = app()->make($handlerClass);
+        $handlerClass = app(QueueRouter::class)->resolve($this->message->getQueue());
+        $handler = app($handlerClass);
         $handler->handle($this->message);
     }
 }
