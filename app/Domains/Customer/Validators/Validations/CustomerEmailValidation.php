@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Domains\Customer\Validators\Validations;
 
 use App\Domains\Customer\Exceptions\CustomerInvalidException;
-use App\Supports\Interfaces\ValidatorInterface;
+use App\Supports\Validators\CheckInterface;
 use Illuminate\Support\Arr;
 
-final class CustomerEmailValidation implements ValidatorInterface
+final class CustomerEmailValidation implements CheckInterface
 {
-    public function validate(array $target): void
+    public function handle(array $target): void
     {
         $email = Arr::get($target, 'customer_email');
 
