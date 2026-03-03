@@ -6,6 +6,7 @@ namespace App\Domains\Customer;
 
 use App\Exceptions\CustomerInvalidException;
 use App\Supports\Interfaces\ValidatorInterface;
+use Illuminate\Support\Arr;
 
 final class CustomerValidator implements ValidatorInterface
 {
