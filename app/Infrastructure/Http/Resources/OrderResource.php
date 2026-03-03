@@ -1,0 +1,34 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Infrastructure\Http\Resources;
+
+use App\Domains\Order\Models\Order;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+/**
+ * @mixin Order
+ */
+class OrderResource extends JsonResource
+{
+    /**
+     * @return array<string, mixed>
+     */
+    public function toArray(Request $request): array
+    {
+        return [
+            'id' => $this->id,
+            'customer_name' => $this->customer_name,
+            'customer_email' => $this->customer_email,
+            'product' => $this->product,
+            'quantity' => $this->quantity,
+            'total_price' => $this->total_price,
+            'status' => $this->status,
+            'amount' => $this->amount,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+        ];
+    }
+}
