@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Supports\Saga;
 
-use App\Models\SagaFailureLog;
+use App\Infrastructure\Models\SagaFailureLog;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Sleep;

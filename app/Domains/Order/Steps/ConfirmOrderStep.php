@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domains\Order\Steps;
 
+use App\Domains\Order\Events\OrderConfirmedEvent;
+use App\Domains\Order\Models\Order;
 use App\Domains\Order\Repositories\OrderRepository;
-use App\Events\OrderConfirmedEvent;
-use App\Models\Order;
 use App\Supports\Saga\SagaContext;
 use App\Supports\Saga\SagaStepInterface;
 use App\Supports\Saga\StepEventInterface;

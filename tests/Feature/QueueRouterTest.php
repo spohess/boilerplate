@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use App\Supports\Queue\Abstracts\AbstractQueueHandler;
-use App\Supports\Queue\QueueMessage;
 use App\Supports\Queue\QueueRouter;
+use Tests\Fixtures\AnotherFakeRouterHandler;
+use Tests\Fixtures\FakeRouterHandler;
 
 it('registers and resolves a handler for a queue', function () {
     $router = new QueueRouter();
@@ -26,13 +26,3 @@ it('overwrites a previously registered handler for the same queue', function () 
 
     expect($router->resolve('orders'))->toBe(AnotherFakeRouterHandler::class);
 });
-
-class FakeRouterHandler extends AbstractQueueHandler
-{
-    protected function process(QueueMessage $message): void {}
-}
-
-class AnotherFakeRouterHandler extends AbstractQueueHandler
-{
-    protected function process(QueueMessage $message): void {}
-}

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Models\SagaFailureLog;
+use App\Infrastructure\Models\SagaFailureLog;
 use App\Supports\Saga\SagaContext;
 use App\Supports\Saga\SagaOrchestrator;
 use App\Supports\Saga\SagaStepInterface;

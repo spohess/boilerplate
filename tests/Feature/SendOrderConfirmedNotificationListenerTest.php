@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Events\OrderConfirmedEvent;
-use App\Listeners\SendOrderConfirmedNotificationListener;
+use App\Domains\Order\Events\OrderConfirmedEvent;
+use App\Domains\Order\Listeners\SendOrderConfirmedNotificationListener;
 use App\Supports\Queue\QueueJob;
 use App\Supports\Saga\SagaContext;
 use Illuminate\Support\Facades\Bus;

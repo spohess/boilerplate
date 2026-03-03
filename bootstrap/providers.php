@@ -3,6 +3,6 @@
 declare(strict_types=1);
 
 return [
-    App\Providers\AppServiceProvider::class,
-    App\Providers\QueueRouteServiceProvider::class,
+    App\Infrastructure\Providers\AppServiceProvider::class,
+    App\Infrastructure\Providers\QueueRouteServiceProvider::class,
 ];

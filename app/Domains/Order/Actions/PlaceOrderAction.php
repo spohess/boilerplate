@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Domains\Order\Actions;
 
 use App\Domains\Customer\Validators\CustomerValidator;
+use App\Domains\Order\Models\Order;
 use App\Domains\Order\Steps\ConfirmOrderStep;
 use App\Domains\Order\Steps\CreateOrderStep;
 use App\Domains\Order\Steps\ProcessPaymentStep;
-use App\Models\Order;
 use App\Supports\Interfaces\ActionInterface;
 use App\Supports\Saga\SagaContext;
 use App\Supports\Saga\SagaOrchestrator;

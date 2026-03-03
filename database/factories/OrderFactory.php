@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Domains\Order\Models\Order;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Order>
+ * @extends Factory<Order>
  */
 class OrderFactory extends Factory
 {
-    /**
-     * @return array<string, mixed>
-     */
+    protected $model = Order::class;
+
     public function definition(): array
     {
         return [

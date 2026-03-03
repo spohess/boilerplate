@@ -26,13 +26,15 @@ it('creates a confirmed order when all steps succeed', function () {
 
     $response->assertStatus(201)
         ->assertJson([
-            'customer_name' => 'John Doe',
-            'customer_email' => 'john@example.com',
-            'product' => 'Laravel Course',
-            'quantity' => 1,
-            'total_price' => 9900,
-            'status' => 'confirmed',
-            'amount' => 'sub_123',
+            'data' => [
+                'customer_name' => 'John Doe',
+                'customer_email' => 'john@example.com',
+                'product' => 'Laravel Course',
+                'quantity' => 1,
+                'total_price' => 9900,
+                'status' => 'confirmed',
+                'amount' => 'sub_123',
+            ],
         ]);
 
     $this->assertDatabaseHas('orders', [
