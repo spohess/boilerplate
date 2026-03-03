@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Domains\Order\Actions\PlaceOrderAction;
 use App\Http\Requests\StoreOrderRequest;
+use App\Http\Resources\OrderResource;
 use App\Supports\Exceptions\ValidatorException;
 use Illuminate\Http\JsonResponse;
 use Throwable;
@@ -21,7 +22,7 @@ class OrderController extends Controller
         try {
             $order = $this->action->execute($request->validated());
 
-            return response()->json($order, 201);
+            return new OrderResource($order)->response()->setStatusCode(201);
         } catch (ValidatorException $e) {
             return response()->json(['error' => $e->getMessage()], $e->getCode() ?: 422);
         } catch (Throwable $t) {
