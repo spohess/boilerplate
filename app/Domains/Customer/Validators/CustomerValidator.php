@@ -4,22 +4,17 @@ declare(strict_types=1);
 
 namespace App\Domains\Customer\Validators;
 
-use App\Domains\Customer\Exceptions\CustomerInvalidException;
-use App\Supports\Interfaces\ValidatorInterface;
-use Illuminate\Support\Arr;
+use App\Domains\Customer\Validators\Validations\CustomerEmailValidation;
+use App\Domains\Customer\Validators\Validations\CustomerNameValidation;
+use App\Supports\Validators\AbstractValidator;
 
-final class CustomerValidator implements ValidatorInterface
+final class CustomerValidator extends AbstractValidator
 {
-    public function validate(array $target): void
+    protected function validations(): array
     {
-        $name = Arr::get($target, 'customer_name');
-        if (empty($name)) {
-            throw new CustomerInvalidException('Customer name is required');
-        }
-
-        $email = Arr::get($target, 'customer_email');
-        if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new CustomerInvalidException('A valid customer email is required');
-        }
+        return [
+            CustomerNameValidation::class,
+            CustomerEmailValidation::class,
+        ];
     }
 }
