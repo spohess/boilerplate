@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Domains\Customer;
+namespace App\Domains\Customer\Validators;
 
-use App\Exceptions\CustomerInvalidException;
+use App\Domains\Customer\Exceptions\CustomerInvalidException;
 use App\Supports\Interfaces\ValidatorInterface;
 use Illuminate\Support\Arr;
 

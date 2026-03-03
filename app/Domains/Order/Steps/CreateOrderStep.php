@@ -11,7 +11,9 @@ use App\Supports\Saga\SagaStepInterface;
 
 final class CreateOrderStep implements SagaStepInterface
 {
-    public function __construct(private OrderRepository $orderRepository) {}
+    public function __construct(
+        private OrderRepository $orderRepository,
+    ) {}
 
     public function run(SagaContext $context): void
     {

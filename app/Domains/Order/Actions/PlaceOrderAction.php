@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domains\Order\Actions;
 
-use App\Domains\Customer\CustomerValidator;
+use App\Domains\Customer\Validators\CustomerValidator;
 use App\Domains\Order\Steps\ConfirmOrderStep;
 use App\Domains\Order\Steps\CreateOrderStep;
 use App\Domains\Order\Steps\ProcessPaymentStep;
@@ -16,9 +16,9 @@ use App\Supports\Saga\SagaOrchestrator;
 final class PlaceOrderAction implements ActionInterface
 {
     public function __construct(
+        private CustomerValidator $customerValidator,
         private SagaContext $context,
         private SagaOrchestrator $orchestrator,
-        private CustomerValidator $customerValidator,
     ) {}
 
     /** @param array<string, mixed> $data */
