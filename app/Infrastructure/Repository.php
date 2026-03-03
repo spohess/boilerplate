@@ -101,13 +101,13 @@ abstract class Repository implements RepositoryInterface
     protected function buildSafeQuery(array $filter): Builder
     {
         if (empty($filter)) {
-            throw new InvalidArgumentException('Filtro obrigatório para operações de escrita.');
+            throw new InvalidArgumentException('Required filter for write operations');
         }
 
         $query = $this->applyFilter($this->model->query(), $filter);
 
         if ($query->toRawSql() === $this->model->query()->toRawSql()) {
-            throw new RuntimeException('Nenhum filtro foi aplicado à query.');
+            throw new RuntimeException('No filter was applied to the query');
         }
 
         return $query;
