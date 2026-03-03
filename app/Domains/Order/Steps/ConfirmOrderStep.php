@@ -9,9 +9,9 @@ use App\Events\OrderConfirmedEvent;
 use App\Models\Order;
 use App\Supports\Saga\SagaContext;
 use App\Supports\Saga\SagaStepInterface;
-use App\Supports\Saga\StepDispatchesEventInterface;
+use App\Supports\Saga\StepEventInterface;
 
-final class ConfirmOrderStep implements SagaStepInterface, StepDispatchesEventInterface
+final class ConfirmOrderStep implements SagaStepInterface, StepEventInterface
 {
     public function __construct(private OrderRepository $orderRepository) {}
 
