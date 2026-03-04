@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Http\Controllers;
+namespace App\Infrastructure\Http\Orders\Controllers;
 
 use App\Domains\Order\Actions\PlaceOrderAction;
-use App\Infrastructure\Http\Requests\StoreOrderRequest;
-use App\Infrastructure\Http\Resources\OrderResource;
+use App\Infrastructure\Http\Controllers\Controller;
+use App\Infrastructure\Http\Orders\Requests\StoreOrderRequest;
+use App\Infrastructure\Http\Orders\Resources\OrderResource;
 use App\Supports\Exceptions\ValidatorException;
 use Illuminate\Http\JsonResponse;
 use Throwable;

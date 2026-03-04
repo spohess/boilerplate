@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Http\Resources;
+namespace App\Infrastructure\Http\Orders\Resources;
 
 use App\Domains\Order\Models\Order;
 use Illuminate\Http\Request;
