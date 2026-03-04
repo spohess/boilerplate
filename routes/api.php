@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Infrastructure\Http\Orders\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/orders', OrderController::class);
+Route::prefix('orders')
+            ->name('orders.')
+            ->group(__DIR__ . '/api/orders.php');
