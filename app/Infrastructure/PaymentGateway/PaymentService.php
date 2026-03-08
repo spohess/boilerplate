@@ -27,6 +27,7 @@ final class PaymentService implements ServicesInterface
 
         return new PaymentDTO(
             amount: $response->json('amount'),
+            protocol: $response->json('protocol'),
         );
     }
 }

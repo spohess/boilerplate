@@ -10,10 +10,14 @@ final class PaymentDTO implements DTOInterface
 {
     public function __construct(
         public readonly mixed $amount,
+        public readonly string $protocol,
     ) {}
 
     public function toArray(): array
     {
-        return ['amount' => $this->amount];
+        return [
+            'amount' => $this->amount,
+            'protocol' => $this->protocol,
+        ];
     }
 }
