@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Supports\Saga;
 
 use App\Infrastructure\Models\SagaFailureLog;
+use App\Supports\Saga\Interfaces\SagaStepInterface;
+use App\Supports\Saga\Interfaces\StepEventInterface;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Sleep;

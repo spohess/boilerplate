@@ -12,7 +12,7 @@ beforeEach(function () {
 
 it('creates a confirmed order when all steps succeed', function () {
     Http::fake([
-        'external-service.example.com/pay' => Http::response(['amount' => 'sub_123'], 200),
+        'external-service.example.com/pay' => Http::response(['amount' => 'sub_123', 'protocol' => 'PAY-ABC123'], 200),
         'external-service.example.com/notify' => Http::response([], 200),
     ]);
 
@@ -75,6 +75,7 @@ it('calls the external service refund endpoint on rollback', function () {
     Http::fake([
         'external-service.example.com/pay' => Http::response([
             'amount' => 'sub_456',
+            'protocol' => 'PAY-DEF456',
         ], 200),
         'external-service.example.com/refund' => Http::response([], 200),
     ]);

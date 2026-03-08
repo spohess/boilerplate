@@ -6,7 +6,7 @@ namespace App\Domains\Customer\Validators;
 
 use App\Domains\Customer\Validators\Validations\CustomerEmailValidation;
 use App\Domains\Customer\Validators\Validations\CustomerNameValidation;
-use App\Supports\Validators\AbstractValidator;
+use App\Supports\Validators\Abstracts\AbstractValidator;
 
 final class CustomerValidator extends AbstractValidator
 {

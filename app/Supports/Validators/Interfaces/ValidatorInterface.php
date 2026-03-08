@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Supports\Validators;
+namespace App\Supports\Validators\Interfaces;
 
 use App\Supports\Exceptions\ValidatorException;
 

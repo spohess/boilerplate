@@ -6,8 +6,8 @@ namespace App\Domains\Order\Steps;
 
 use App\Domains\Order\Models\Order;
 use App\Domains\Order\Repositories\OrderRepository;
+use App\Supports\Saga\Interfaces\SagaStepInterface;
 use App\Supports\Saga\SagaContext;
-use App\Supports\Saga\SagaStepInterface;
 
 final class CreateOrderStep implements SagaStepInterface
 {
