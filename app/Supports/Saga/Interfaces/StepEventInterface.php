@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Supports\Saga;
+namespace App\Supports\Saga\Interfaces;
+
+use App\Supports\Saga\SagaContext;
 
 interface StepEventInterface
 {

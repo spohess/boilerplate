@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Supports\Validators;
 
+use App\Supports\Validators\Interfaces\ValidatorInterface;
+
 abstract class AbstractValidator implements ValidatorInterface
 {
     /** @return class-string<CheckInterface>[] */

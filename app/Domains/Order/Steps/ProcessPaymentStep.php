@@ -9,8 +9,8 @@ use App\Domains\Order\Repositories\OrderRepository;
 use App\Infrastructure\PaymentGateway\PaymentDTO;
 use App\Infrastructure\PaymentGateway\PaymentService;
 use App\Infrastructure\PaymentGateway\RefundService;
+use App\Supports\Saga\Interfaces\SagaStepInterface;
 use App\Supports\Saga\SagaContext;
-use App\Supports\Saga\SagaStepInterface;
 
 final class ProcessPaymentStep implements SagaStepInterface
 {

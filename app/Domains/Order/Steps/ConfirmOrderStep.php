@@ -7,9 +7,9 @@ namespace App\Domains\Order\Steps;
 use App\Domains\Order\Events\OrderConfirmedEvent;
 use App\Domains\Order\Models\Order;
 use App\Domains\Order\Repositories\OrderRepository;
+use App\Supports\Saga\Interfaces\SagaStepInterface;
+use App\Supports\Saga\Interfaces\StepEventInterface;
 use App\Supports\Saga\SagaContext;
-use App\Supports\Saga\SagaStepInterface;
-use App\Supports\Saga\StepEventInterface;
 
 final class ConfirmOrderStep implements SagaStepInterface, StepEventInterface
 {
