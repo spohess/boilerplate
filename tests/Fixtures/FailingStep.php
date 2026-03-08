@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Fixtures;
 
 use App\Supports\Saga\SagaContext;
-use App\Supports\Saga\SagaStepInterface;
+use App\Supports\Saga\Interfaces\SagaStepInterface;
 use RuntimeException;
 
 final class FailingStep implements SagaStepInterface

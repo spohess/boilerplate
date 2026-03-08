@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Supports\Validators;
+namespace App\Supports\Validators\Abstracts;
 
 use App\Supports\Validators\Interfaces\ValidatorInterface;
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\Infrastructure\Models\SagaFailureLog;
 use App\Supports\Saga\SagaContext;
 use App\Supports\Saga\SagaOrchestrator;
-use App\Supports\Saga\SagaStepInterface;
+use App\Supports\Saga\Interfaces\SagaStepInterface;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Sleep;
 use Tests\Fixtures\FailingStep;
