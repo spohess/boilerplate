@@ -23,7 +23,7 @@ class OrderController extends Controller
         try {
             $order = $this->action->execute($request->validated());
 
-            return new OrderResource($order)->response()->setStatusCode(201);
+            return OrderResource::make($order)->response()->setStatusCode(201);
         } catch (ValidatorException $e) {
             return response()->json(['error' => $e->getMessage()], $e->getCode() ?: 422);
         } catch (Throwable $t) {
