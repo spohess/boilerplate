@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(vendor/bin/pint:*)",
+      "Bash(php artisan make:class:*)",
+      "Bash(php artisan:*)",
+      "mcp__laravel-boost__search-docs",
+      "mcp__laravel-boost__get-config",
+      "Bash(php -m:*)",
+      "mcp__laravel-boost__application-info",
+      "mcp__laravel-boost__tinker",
+      "mcp__laravel-boost__list-available-env-vars",
+      "mcp__laravel-boost__list-artisan-commands",
+      "mcp__ide__getDiagnostics",
+      "Bash(ls:*)",
+      "Bash(git mv:*)",
+      "Bash(composer dump-autoload:*)",
+      "Bash(git stash:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "laravel-boost"
+  ]
+}
